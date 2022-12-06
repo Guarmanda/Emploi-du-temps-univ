@@ -6,9 +6,13 @@
  */
 function extraireInfosEvent(arg){
     divdate = document.createElement('div')
+    divdate.style.color = "black";
     divtitre = document.createElement('div')
+    divtitre.style.color = "black";
     divloc = document.createElement('div')
+    divloc.style.color = "black";
     divdesc = document.createElement('div')
+    divdesc.style.color = "black";
     //"LOCATION" et "DESCRIPTION" sont des extendedProps pour fullcalendar, il ne les gère pas par défaut
    divloc.innerHTML = arg.event.extendedProps.location
    divdesc.innerHTML = arg.event.extendedProps.description.replace(/\(Exported.*/, '');   
@@ -17,12 +21,12 @@ function extraireInfosEvent(arg){
       hour12: false,
       hour: "2-digit",
       minute: "2-digit",
-  }).replace(/.*, /, '');   
-  var end = arg.event.end.toLocaleDateString(navigator.language, { // you can use undefined as first argument
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-  }).replace(/.*, /, '');   
+   }).replace(/\d{1,2}[\-|\.|\/]\d{1,2}[\-|\.|\/]\d{2,4}/g, "");   
+   var end = arg.event.end.toLocaleDateString(navigator.language, { // you can use undefined as first argument
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+    }).replace(/\d{1,2}[\-|\.|\/]\d{1,2}[\-|\.|\/]\d{2,4}/g, "");     
    divdate.innerHTML = start+ " - "+end
    divtitre.innerHTML = arg.event.title
    return [ divdate, divloc, divtitre, divdesc ];
@@ -36,6 +40,7 @@ var calendarEl = document.getElementById('calendar');
       //On désactive cette case inutile au dessus
       allDaySlot: false,
       locale: 'fr',
+      firstDay: 6,
       //j'aime bien bootstrap mais d'autres thèmes sont dispo
       themeSystem: 'bootstrap5',
       //on va commencer à 8h et finir à 20, le batiment d'info est censé fermer à 20
@@ -60,6 +65,25 @@ var calendarEl = document.getElementById('calendar');
       eventContent: function (arg) {          
         arrayOfDomNodes = extraireInfosEvent(arg);
         return { domNodes: arrayOfDomNodes }
+      },
+      eventClassNames: function(arg) {
+
+          if(arg.event.title.includes("TD")){
+          return ['td']
+          }
+          else if(arg.event.title.includes("TP")){
+          return ['tp']
+          }
+          else if(arg.event.title.includes("AAG")){
+          return ['aag']
+          }
+          else if(arg.event.title.includes("Examen") || arg.event.title.includes("CT") || arg.event.title.includes("CC")){
+          return ['exam']
+          }
+          else {
+          return ['cours']
+          }
+
       }
     });
     //eeeet on affiche le calendrier
@@ -74,7 +98,7 @@ var l1 = creerBoutonDropDown("L1")
 + creerSousMenu("TDB - TP3", 641)
 + creerSousMenu("TDB - TP4", 644)
 + creerSousMenu("TDC - TP5", 647)
-+ creerSousMenu("TDC - TP6", 671) + "</ul>"
++ creerSousMenu("TDC - TP6", 771) + "</ul>"
 var l2 = creerBoutonDropDown("L2") 
 + creerSousMenu("TDA - TP1", 899)
 + creerSousMenu("TDA - TP2", 1070)
@@ -90,10 +114,8 @@ var m1 = creerBoutonDropDown("M1")
 + creerSousMenu("Alternants", 1189)
 + creerSousMenu("Initiaux", 1733) + "</ul>"
 var m2 = creerBoutonDropDown("M2") 
-+ creerSousMenu("AFD Alternants", 1111)
-+ creerSousMenu("AFD Initiaux", 1073)
-+ creerSousMenu("ATAL Alternants", 1485)
-+ creerSousMenu("ATAL Initiaux", 544) + "</ul>"
++ creerSousMenu("Groupe B", 2891)
++ creerSousMenu("Groupe A", 2903) + "</ul>"
 document.getElementsByClassName("fc-toolbar-chunk")[1].innerHTML = l1+l2+l3+m1+m2;
 
 //on refait la responsivité, juste au cas ou

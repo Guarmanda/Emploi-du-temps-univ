@@ -2,3 +2,23 @@
 .fc-event-main{
     overflow: auto;
 }
+
+.td{
+    background-color: #00FF00;
+}
+
+.cours{
+    background-color: #FFFF00;
+}
+
+.tp{
+    background-color: #00FFFF;
+}
+
+.aag{
+       background-color: #FF8000;
+}
+
+.exam{
+    background-color: red;
+}

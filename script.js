@@ -4,9 +4,13 @@ function setCookie(cname, cvalue, exsecond) {
     d.setTime(d.getTime() + (exsecond*1000));
     let expires = "expires="+ d.toUTCString();
     if(exsecond == -1){
-        expires = "Fri, 31 Dec 9999 23:59:59 GMT"
+        let date = new Date();
+        date.setFullYear(date.getFullYear() + 1);
+        let now_utc = date.toUTCString();
+        expires = "expires="+now_utc;
     }
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + "; " + expires + "; SameSite=Strict; path=/";
+    console.log(cname + "=" + cvalue + "; " + expires + "; SameSite=Strict; path=/");
     location.reload();
   }
 

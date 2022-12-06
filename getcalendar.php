@@ -1,18 +1,13 @@
 <?php
 
-//l'url à ajouter dans le lien
 $res = 524;
 $res2 = $_COOKIE["idRessource"];
 if($res2 != null){
     $res = $res2;
 }
 
-//LE RESTE EST HONTEUSEMENT VOLÉ SUR STACK OVERFLOW
-//ça fait une requête propre qui récupère le fichier ical à partir de l'univ
-
 // Set the url of the calendar feed.
-$url = 'http://planning.univ-lemans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources='.$res.'&projectId=1&calType=ical&nbWeeks=4';
-
+$url = 'http://planning.univ-lemans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources='.$res.'&projectId=5&calType=ical&nbWeeks=12';
 /*****************************************/
 
 // Run the helper function with the desired URL and echo the contents.
